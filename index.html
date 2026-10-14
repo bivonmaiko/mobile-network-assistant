@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0f172a">
+
+    <title>Mobile Network Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="app-header">
+        <div>
+            <h1>Network Assistant</h1>
+            <p>Mobile Network Diagnostic Tool</p>
+        </div>
+
+        <button id="themeToggle" class="theme-btn">🌙</button>
+    </header>
+
+
+    <main class="container">
+
+        <section class="status-card">
+
+            <div class="status-icon">
+                🌐
+            </div>
+
+            <div>
+                <h2>Network Status</h2>
+                <p id="networkStatus">Checking connection...</p>
+            </div>
+
+        </section>
+        <!-- NETWORK DASHBOARD -->
+
+        <section class="dashboard-section">
+
+            <div class="dashboard-header">
+                <div>
+                    <h2>📊 Network Dashboard</h2>
+                    <p>Live overview of your current network connection.</p>
+                </div>
+
+                <button class="dashboard-refresh" onclick="loadNetworkDashboard()">
+                    🔄 Refresh
+                </button>
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <span class="dashboard-icon">🩺</span>
+
+                <div>
+                    <small>Network Health</small>
+
+                    <strong id="dashboardHealth">
+                        Checking...
+                    </strong>
+                </div>
+            </div>
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">🌐</span>
+
+                <div>
+                    <small>Internet</small>
+                    <strong id="dashboardInternet">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">📶</span>
+
+                <div>
+                    <small>Wi-Fi</small>
+                    <strong id="dashboardWifi">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">📊</span>
+
+                <div>
+                    <small>Signal Strength</small>
+                    <strong id="dashboardSignal">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">⚡</span>
+
+                <div>
+                    <small>Link Speed</small>
+                    <strong id="dashboardSpeed">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">🌍</span>
+
+                <div>
+                    <small>Local IP</small>
+                    <strong id="dashboardIP">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">🚪</span>
+
+                <div>
+                    <small>Gateway</small>
+                    <strong id="dashboardGateway">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">🔎</span>
+
+                <div>
+                    <small>DNS</small>
+                    <strong id="dashboardDNS">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <span class="dashboard-icon">🖧</span>
+
+                <div>
+                    <small>Active Adapter</small>
+                    <strong id="dashboardAdapter">
+                        Checking...
+                    </strong>
+                </div>
+
+            </div>
+
+            </div>
+
+        </section>
+        <!-- DIAGNOSTIC REPORT -->
+
+        <section class="report-section">
+
+            <div class="report-header">
+
+                <div>
+
+                    <h2>📄 Diagnostic Report</h2>
+
+                    <p>
+                        Generate a professional summary of your current network condition.
+                    </p>
+
+                </div>
+
+                <div class="report-buttons">
+
+
+                    <div class="report-buttons">
+
+                        <button class="report-btn" onclick="generateNetworkReport()">
+                            📄 Generate Report
+                        </button>
+
+                        <button class="report-download-btn" onclick="downloadNetworkReport()">
+                            📥 Download TXT
+                        </button>
+
+                        <button class="report-pdf-btn" onclick="downloadNetworkPDF()">
+                            📕 Download PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div id="networkReport" class="network-report">
+
+                    <div class="report-empty">
+                        Click <strong>Generate Report</strong>
+                        to create a network diagnostic report.
+                    </div>
+
+                </div>
+
+        </section>
+        <!-- SMART TROUBLESHOOTING -->
+
+        <section class="smart-diagnosis-section">
+
+            <div class="smart-diagnosis-header">
+
+                <div>
+                    <h2>🧠 Smart Troubleshooting</h2>
+                    <p>
+                        Automatically analyze your network connection
+                        and identify possible problems.
+                    </p>
+                </div>
+
+                <button class="diagnosis-btn" onclick="runSmartDiagnosis()">
+                    🧠 Run Full Diagnosis
+                </button>
+
+            </div>
+
+            <div id="smartDiagnosisResult" class="smart-diagnosis-result">
+
+                <div class="diagnosis-empty">
+                    Click <strong>Run Full Diagnosis</strong>
+                    to analyze your network.
+                </div>
+
+            </div>
+
+        </section>
+        <!-- DIAGNOSTIC HISTORY -->
+
+        <section class="history-section">
+
+            <div class="history-header">
+
+                <div>
+                    <h2>📋 Diagnostic History</h2>
+                    <p>Recent network tests performed by the assistant.</p>
+                </div>
+
+                <button class="history-clear" onclick="clearDiagnosticHistory()">
+                    🗑️ Clear
+                </button>
+
+            </div>
+
+            <div id="diagnosticHistory" class="history-list">
+
+                <div class="history-empty">
+                    No diagnostic tests recorded yet.
+                </div>
+
+            </div>
+
+        </section>
+        <section class="tools-section">
+
+            <h2>Network Tools</h2>
+
+            <div class="tools-grid">
+                <button class="tool-card" onclick="getNetworkInterfaces()">
+                    <span>🖧</span>
+                    <strong>Network Interfaces</strong>
+                    <small>Monitor network adapters</small>
+                </button>
+                <button class="tool-card" onclick="showSpeedTest()">
+                    <span>📈</span>
+                    <strong>Network Speed Test</strong>
+                    <small>Measure connection speed</small>
+                </button>
+                <button class="tool-card" onclick="getWiFiInfo()">
+                    <span>📶</span>
+                    <strong>Wi-Fi Information</strong>
+                    <small>View Wi-Fi connection details</small>
+                </button>
+                <button class="tool-card" onclick="getNetworkInfo()">
+                    <span>📡</span>
+                    <strong>Network Information</strong>
+                    <small>View device & network details</small>
+                </button>
+                <button class="tool-card" onclick="checkConnection()">
+                    <span>🌐</span>
+                    <strong>Internet Check</strong>
+                    <small>Check connectivity</small>
+                </button>
+
+                <button class="tool-card" onclick="getIPInfo()">
+                    <span>📍</span>
+                    <strong>IP Information</strong>
+                    <small>View network details</small>
+                </button>
+                <button class="tool-card" onclick="runDiagnostic()">
+                    <span>🧠</span>
+                    <strong>Diagnostic Results</strong>
+                    <small>Analyze network health</small>
+                </button>
+                <button class="tool-card" onclick="showDNSLookup()" <span>🔎</span>
+                    <strong>DNS Lookup</strong>
+                    <small>Check domain resolution</small>
+                </button>
+
+                <button class="tool-card" onclick="showPortChecker()">
+                    <span>🔌</span>
+                    <strong>Port Checker</strong>
+                    <small>Test TCP ports</small>
+                </button>
+
+                <button class="tool-card" onclick="showPingTool()">
+                    <span>📡</span>
+                    <strong>Ping Test</strong>
+                    <small>Measure network latency</small>
+                </button>
+
+            </div>
+            <section id="networkInfoPanel" class="port-panel">
+
+                <h2>📡 Network Information</h2>
+
+                <p class="panel-description">
+                    View your computer and current network configuration.
+                </p>
+
+                <button class="test-btn" onclick="getNetworkInfo()">
+                    Get Network Information
+                </button>
+
+                <strong>Wi-Fi Information</strong>
+                <small>View Wi-Fi connection details</small>
+                </button>
+            </section>
+            <section id="wifiPanel" class="port-panel">
+
+                <h2>📶 Wi-Fi Information</h2>
+
+                <p class="panel-description">
+                    View your current Wi-Fi connection details.
+                </p>
+
+                <button class="test-btn" onclick="getWiFiInfo()">
+                    Check Wi-Fi
+                </button>
+
+            </section>
+            <section id="pingPanel" class="port-panel">
+                <section id="dnsPanel" class="port-panel">
+
+                    <h2>🔎 DNS Lookup</h2>
+
+                    <p class="panel-description">
+                        Resolve a domain name and view its IP addresses.
+                    </p>
+
+                    <div class="input-group">
+
+                        <label for="dnsHost">Domain Name</label>
+
+                        <input type="text" id="dnsHost" placeholder="google.com">
+
+                    </div>
+
+                    <button class="test-btn" onclick="runDNSLookup()">
+                        Lookup DNS
+                    </button>
+
+                </section>
+                <h2>📡 Ping & Latency Test</h2>
+
+                <p class="panel-description">
+                    Measure the response time between your computer and a host.
+                </p>
+
+                <div class="input-group">
+
+                    <label for="pingHost">
+
+                        Host or IP Address
+
+                    </label>
+
+                    <input type="text" id="pingHost" placeholder="google.com or 8.8.8.8">
+
+                </div>
+
+                <button class="test-btn" onclick="runPingTest()">
+
+                    Run Ping Test
+
+                </button>
+
+            </section>
+        </section>
+
+        <section id="portPanel" class="port-panel">
+
+            <h2>🔌 TCP Port Checker</h2>
+
+            <p class="panel-description">
+                Test whether a TCP port is reachable on a host.
+            </p>
+
+            <div class="input-group">
+
+                <label for="hostInput">Host or IP Address</label>
+
+                <input type="text" id="hostInput" placeholder="example.com or 192.168.1.1">
+
+            </div>
+
+            <div class="input-group">
+
+                <label for="portInput">Port Number</label>
+
+                <input type="number" id="portInput" placeholder="80" min="1" max="65535">
+
+            </div>
+
+            <button class="test-btn" onclick="runPortTest()">
+                Test Port
+            </button>
+
+        </section>
+        <section class="results-section">
+
+            <h2>Diagnostic Results</h2>
+
+            <div id="results" class="results-box">
+                <p>Select a network tool to begin.</p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>Mobile Network Assistant • Bivon Maiko</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+
+</html>

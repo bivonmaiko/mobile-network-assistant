@@ -1,8 +1,8 @@
 
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(1, 0, 5, 0),
-    prodvers=(1, 0, 5, 0),
+    filevers=(1, 0, 6, 0),
+    prodvers=(1, 0, 6, 0),
     mask=0x3F,
     flags=0x0,
     OS=0x4,
@@ -15,11 +15,11 @@ VSVersionInfo(
       StringTable('040904B0', [
         StringStruct('CompanyName', 'Bivon Maiko'),
         StringStruct('FileDescription', 'Mobile Network Assistant'),
-        StringStruct('FileVersion', '1.0.5'),
+        StringStruct('FileVersion', '1.0.6'),
         StringStruct('InternalName', 'MobileNetworkAssistant'),
         StringStruct('OriginalFilename', 'Mobile Network Assistant.exe'),
         StringStruct('ProductName', 'Mobile Network Assistant'),
-        StringStruct('ProductVersion', '1.0.5')
+        StringStruct('ProductVersion', '1.0.6')
       ])
     ]),
     VarFileInfo([
@@ -27,4 +27,3 @@ VSVersionInfo(
     ])
   ]
 )
-

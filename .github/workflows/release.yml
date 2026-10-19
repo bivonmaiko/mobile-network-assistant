@@ -1,0 +1,59 @@
+﻿name: Build and Attest Windows Release
+
+on:
+  push:
+    tags:
+      - "v1.0.6"
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+jobs:
+  build-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Build Windows executable
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name "Mobile Network Assistant" --icon ".\mobile_network_assistant.ico" --version-file ".\version_info.txt" --add-data ".\index.html;." --add-data ".\style.css;." --add-data ".\script.js;." --add-data ".\manifest.json;." --distpath ".\release" --workpath ".\build" --specpath "." server.py
+          if ($LASTEXITCODE -ne 0) {
+            throw "PyInstaller build failed."
+          }
+
+      - name: Package release ZIP
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force ".\package" | Out-Null
+          Copy-Item ".\release\Mobile Network Assistant.exe" ".\package\"
+          Copy-Item ".\README.md" ".\package\README.txt"
+          Compress-Archive -Path ".\package\*" -DestinationPath ".\Mobile-Network-Assistant-v1.0.6.zip" -Force
+          Get-FileHash ".\Mobile-Network-Assistant-v1.0.6.zip" -Algorithm SHA256
+
+      - name: Generate build provenance attestation
+        uses: actions/attest@v4
+        with:
+          subject-path: ".\Mobile-Network-Assistant-v1.0.6.zip"
+
+      - name: Publish GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$env:GITHUB_REF_NAME" ".\Mobile-Network-Assistant-v1.0.6.zip" --title "Mobile Network Assistant v1.0.6" --notes "Windows release built by GitHub Actions. Build provenance attestation is available through GitHub."

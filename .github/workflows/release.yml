@@ -48,8 +48,7 @@ jobs:
       - name: Generate build provenance attestation
         uses: actions/attest@v4
         with:
-          subject-path: ".\Mobile-Network-Assistant-v1.0.6.zip"
-
+         subject-path: "./Mobile-Network-Assistant-v1.0.6.zip"
       - name: Publish GitHub release
         shell: pwsh
         env:
